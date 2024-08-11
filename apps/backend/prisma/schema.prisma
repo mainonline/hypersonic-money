@@ -1,0 +1,54 @@
+// schema.prisma
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model BeaconState {
+  id        Int      @id @default(autoincrement())
+  slot      BigInt
+  state_root String
+}
+
+model ExecutionBlock {
+  id                 Int      @id @default(autoincrement())
+  number             BigInt
+  hash               String
+  parent_hash        String
+  timestamp          DateTime
+  base_fee_per_gas   BigInt
+  difficulty         BigInt
+  gas_used           BigInt
+  total_difficulty   BigInt
+  blob_gas_used      BigInt
+  excess_blob_gas    BigInt
+}
+
+model EthSupply {
+  id                 Int      @id @default(autoincrement())
+  timestamp          DateTime
+  block_number       BigInt
+  deposits_slot      BigInt
+  balances_slot      BigInt
+  supply             Decimal
+}
+
+model EthPrice {
+  id        Int      @id @default(autoincrement())
+  timestamp DateTime
+  usd       Float
+}
+
+model EthFee {
+  id                 Int      @id @default(autoincrement())
+  timestamp          DateTime
+  block_number       BigInt
+  base_fee_per_gas   BigInt
+  blob_fee_per_gas   BigInt
+  burn_rate          Decimal
+  issuance_rate      Decimal
+}
